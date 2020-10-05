@@ -41,10 +41,10 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '1d' });
-      return res.status(200).cookie('jwt', token, {
-        maxAge: 360000 * 24,
-        httpOnly: false,
-      }).send({ message: `Привет, ${user.name}!` }).end();
+      return res.status(200).send({
+        message: `Привет, ${user.name}!`,
+        token: `${token}`,
+      }).end();
     });
   }).catch(next);
 };
