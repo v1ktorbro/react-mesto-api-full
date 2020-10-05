@@ -43,6 +43,7 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '1d' });
       return res.status(200).cookie('jwt', token, {
         maxAge: 360000 * 24,
+        httpOnly: true,
       }).send({
         message: `Привет, ${user.name}!`,
       }).end();
