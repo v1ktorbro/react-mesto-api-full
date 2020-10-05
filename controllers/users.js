@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFound = require('../errors/NotFound');
 const Unauthorize = require('../errors/Unauthorized');
-const { getUserId } = require('../middlewares/auth');
+const { getMySelfId } = require('../middlewares/auth');
 const EmailError = require('../errors/EmailError');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -43,10 +43,8 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '1d' });
       return res.status(200).cookie('jwt', token, {
         maxAge: 360000 * 24,
-        httpOnly: false,
       }).send({
         message: `Привет, ${user.name}!`,
-        token: `${token}`,
       }).end();
     });
   }).catch(next);
@@ -70,10 +68,18 @@ module.exports.getUser = (req, res, next) => {
   }).catch(next);
 };
 
+module.exports.aboutMySelf = (req, res, next) => {
+  User.findById(getMySelfId(req)).then((user) => {
+    if (!user) {
+      throw new NotFound('Неправильно передан id пользователя');
+    }
+    return res.status(200).send({ email: user.email });
+  }).catch(next);
+};
+
 module.exports.updInfoProfile = (req, res, next) => {
   const { name, about } = req.body;
-  const userId = getUserId(req);
-  User.findByIdAndUpdate(userId,
+  User.findByIdAndUpdate(getMySelfId(req),
     { name, about },
     { new: true, runValidators: true }).then((user) => {
     if (!user) {
@@ -85,8 +91,7 @@ module.exports.updInfoProfile = (req, res, next) => {
 
 module.exports.updAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  const userId = getUserId(req);
-  User.findByIdAndUpdate(userId,
+  User.findByIdAndUpdate(getMySelfId(req),
     { avatar },
     { new: true, runValidators: true }).then((user) => {
     if (!user) {

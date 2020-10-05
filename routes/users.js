@@ -1,10 +1,11 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const {
-  getAllUsers, getUser, updInfoProfile, updAvatar,
+  getAllUsers, getUser, updInfoProfile, updAvatar, aboutMySelf,
 } = require('../controllers/users');
 
 router.get('/', getAllUsers);
+router.get('/me', aboutMySelf);
 router.get('/:id', getUser);
 
 router.patch('/me', celebrate({

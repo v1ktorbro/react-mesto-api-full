@@ -10,7 +10,7 @@ module.exports.authorization = (req, res, next) => {
   return next();
 };
 
-module.exports.getUserId = (req) => {
+module.exports.getMySelfId = (req) => {
   return jwt.decode(req.cookies.jwt, { complete: true }).payload._id;
 };
 
