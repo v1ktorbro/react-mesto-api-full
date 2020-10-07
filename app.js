@@ -7,7 +7,7 @@ const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 const { usersRouter } = require('./routes');
 const { cardsRouter } = require('./routes');
 const { login, registerUser } = require('./controllers/users');
@@ -50,6 +50,10 @@ app.use(errors());
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
+  if (err.message === 'jwt expired') {
+    return res.status(401).send({ message: 'jwt expired' });
+  }
+  console.log(err)
   return res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 });
 app.listen(PORT, () => {
