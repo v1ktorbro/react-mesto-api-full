@@ -1,20 +1,27 @@
 # Бэкэнд для проекта [Место Russia Auth](https://github.com/v1ktorbro/react-mesto-auth)
 
-* **_http_ [130.193.58.31](http://130.193.58.31/users)**
-* **_http_ [v1ktorbro.students.nomoreparties.co](http://v1ktorbro.students.nomoreparties.co/users)**
-* **_https_ [v1ktorbro.students.nomoreparties.co](https://v1ktorbro.students.nomoreparties.co/users)**
+* **Репозиторий React приложения, использующее этот API [тут](https://github.com/v1ktorbro/react-mesto-auth)**;
+
+* **Приложение использующее этот API и размещенное на Яндекс.Облаке [тут](https://v1ktorbro.students.nomoreparties.co/)**;
 
 ## Используемый стэк :
 
 **express.js, MongoDB, API REST, Yandex.Cloud**
 
 ## Публичные маршруты  
-1./signup регистрация пользователя в базе. 
+1. /signup регистрация пользователя в базе. 
 POST запрос, в теле которого должно быть 2 поля: email и password;
-2./signin авторизация юзера.
+2. /signin авторизация юзера.
 POST запрос, в теле которого должно быть 2 поля: email и password.
 
 ### Запросы
+
+Сервер принимает запросы по поддоменному имени *api.v1ktorbro.students.nomoreparties.co*
+
+* **_http_ [v1ktorbro.students.nomoreparties.co](http://api.v1ktorbro.students.nomoreparties.co/users)**
+* **_https_ [v1ktorbro.students.nomoreparties.co](https://api.v1ktorbro.students.nomoreparties.co/users)**
+
+* **Публчиный IPv4 *130.193.58.31**
 
 **_для карточек_**
 
