@@ -21,7 +21,7 @@ POST запрос, в теле которого должно быть 2 поля
 * **_http_ [v1ktorbro.students.nomoreparties.co](http://api.v1ktorbro.students.nomoreparties.co/users)**
 * **_https_ [v1ktorbro.students.nomoreparties.co](https://api.v1ktorbro.students.nomoreparties.co/users)**
 
-* **Публчиный IPv4 *130.193.58.31**
+* **Публчиный IPv4 130.193.58.31**
 
 **_для карточек_**
 
