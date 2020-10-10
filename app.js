@@ -53,7 +53,6 @@ app.use((err, req, res, next) => {
   if (err.message === 'jwt expired') {
     return res.status(401).send({ message: 'jwt expired' });
   }
-  console.log(err)
   return res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 });
 app.listen(PORT, () => {
