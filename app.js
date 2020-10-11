@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const NotFound = require('./errors/NotFound');
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3000 } = process.env;
 const { usersRouter } = require('./routes');
 const { cardsRouter } = require('./routes');
 const { login, registerUser } = require('./controllers/users');
