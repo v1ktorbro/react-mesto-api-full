@@ -12,28 +12,26 @@ module.exports.getAllCards = (req, res, next) => {
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
-  Card.create({ name, link, owner: req.user }).then((card) => {
-    return res.status(201).send(card);
-  }).catch(next);
+  Card.create({ name, link, owner: req.user }).then((card) => res.status(201).send(card))
+    .catch(next);
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  const idDeleteCard = req.params.id;
-  Card.findOne({ _id: idDeleteCard }).then((currentCard) => {
+  const { id } = req.params;
+  Card.findOne({ _id: id }).then((currentCard) => {
     if (!currentCard) {
       throw new NotFound('Карточка не существует, либо уже была удалена.');
     }
     if (currentCard.owner.toString() !== req.user._id) {
       throw new NotFound('Вы не можете удалять чужую карточку');
     }
-    return Card.deleteOne({ _id: idDeleteCard }).then(() => {
-      return res.status(200).send('Карточка удалена.');
-    });
+    return Card.deleteOne({ _id: id }).then(() => res.status(200).send('Карточка удалена.'));
   }).catch(next);
 };
 
 module.exports.putLikeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.id,
+  const { id } = req.params;
+  Card.findByIdAndUpdate(id,
     { $addToSet: { likes: req.user } },
     { new: true }).then((findCard) => {
     if (!findCard) {
@@ -44,7 +42,8 @@ module.exports.putLikeCard = (req, res, next) => {
 };
 
 module.exports.deleteLikeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.id,
+  const { id } = req.params;
+  Card.findByIdAndUpdate(id,
     { $pull: { likes: req.user._id } },
     { new: true }).then((findCard) => {
     if (!findCard) {

@@ -6,8 +6,9 @@ const mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const NotFound = require('./errors/NotFound');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 const { usersRouter } = require('./routes');
 const { cardsRouter } = require('./routes');
 const { login, registerUser } = require('./controllers/users');
@@ -43,7 +44,7 @@ app.use('/users', authorization, usersRouter);
 app.use('/cards', authorization, cardsRouter);
 app.use(errorLogger);
 app.get('*', (req, res) => {
-  return res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+  throw new NotFound('Запрашиваемый ресурс не найден');
 });
 app.disable('etag');
 app.use(errors());

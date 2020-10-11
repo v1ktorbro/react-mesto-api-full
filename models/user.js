@@ -15,9 +15,7 @@ const userSchema = new mongoose.Schema({
       validator(value) {
         return validator.isEmail(value);
       },
-      message: (error) => {
-        return `${error.value} не является e-mail адресом`;
-      },
+      message: (error) => `${error.value} не является e-mail адресом`,
     },
   },
   password: {
@@ -27,24 +25,20 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
     minlength: 2,
     maxlength: 30,
   },
   about: {
     type: String,
-    required: true,
   },
   avatar: {
     type: String,
-    required: [true, 'Введите ссылку в формате http(s)://'],
+    required: [false, 'Введите ссылку в формате http(s)://'],
     validate: {
       validator(value) {
         return /https?:\/{2}\S+/gi.test(value);
       },
-      message: (props) => {
-        return `Ссылка ${props.value} введена не верна.`;
-      },
+      message: (props) => `Ссылка ${props.value} введена не верна.`,
     },
   },
 }, { versionKey: false });

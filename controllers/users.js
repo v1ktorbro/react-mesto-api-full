@@ -13,12 +13,7 @@ module.exports.registerUser = (req, res, next) => {
       User.create({
         email,
         password: hash,
-        name: 'Заполните имя',
-        about: 'Напишите немного о себе',
-        avatar: 'https://...',
-      }).then((user) => {
-        return res.status(201).send({ data: { email } });
-      }).catch(next);
+      }).then((user) => res.status(201).send(user)).catch(next);
     });
   }).catch(next);
 };
@@ -26,7 +21,7 @@ module.exports.registerUser = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password).then((jwt) => {
-    return res.status(200).send({ token: jwt });
+    res.status(200).send({ token: jwt });
   }).catch(next);
 };
 
@@ -40,7 +35,8 @@ module.exports.getAllUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  User.findById(req.params.id).then((user) => {
+  const { id } = req.params;
+  User.findById(id).then((user) => {
     if (!user) {
       throw new NotFound('Нет пользователя с таким id');
     }
@@ -49,7 +45,8 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.aboutMySelf = (req, res, next) => {
-  User.findById(req.user).then((user) => {
+  const { _id } = req.user;
+  User.findById(_id).then((user) => {
     if (!user) {
       throw new NotFound('Неправильно передан id пользователя');
     }
