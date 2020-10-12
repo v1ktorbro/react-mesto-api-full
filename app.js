@@ -33,15 +33,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(limiter);
 app.use(requestLogger);
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадет');
-  }, 0);
-});
 app.post('/signin', protectionRoute, login);
 app.post('/signup', protectionRoute, registerUser);
 app.use('/users', authorization, usersRouter);
-app.use('/cards', /* authorization, */ cardsRouter);
+app.use('/cards', authorization, cardsRouter);
 app.use(errorLogger);
 // eslint-disable-next-line no-unused-vars
 app.get('*', (req, res) => {
