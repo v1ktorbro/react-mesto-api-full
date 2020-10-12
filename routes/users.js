@@ -28,7 +28,8 @@ router.patch('/me', celebrate({
 
 router.patch('/me/avatar', celebrate({
   body: Joi.object({
-    avatar: Joi.string().regex(/https?:\/{2}\S+/).required(),
+    // eslint-disable-next-line no-useless-escape
+    avatar: Joi.string().regex(/^(https?:\/{2})?([\da-zа-я\.-]+)\.([\S]{2,})([\/\w \.-]*)*\/?$/).required(),
   }),
 }), updAvatar);
 
