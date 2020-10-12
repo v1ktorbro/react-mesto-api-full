@@ -41,8 +41,9 @@ app.get('/crash-test', () => {
 app.post('/signin', protectionRoute, login);
 app.post('/signup', protectionRoute, registerUser);
 app.use('/users', authorization, usersRouter);
-app.use('/cards', authorization, cardsRouter);
+app.use('/cards', /* authorization, */ cardsRouter);
 app.use(errorLogger);
+// eslint-disable-next-line no-unused-vars
 app.get('*', (req, res) => {
   throw new NotFound('Запрашиваемый ресурс не найден');
 });
@@ -57,5 +58,6 @@ app.use((err, req, res, next) => {
   return res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 });
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`PORT раздается на сервере ${PORT}`);
 });

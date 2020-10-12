@@ -14,9 +14,7 @@ const cardSchema = new mongoose.Schema({
       validator(value) {
         return /https?:\/{2}\S+/gi.test(value);
       },
-      message: (props) => {
-        return `Ссылка ${props.value} введена не верна.`;
-      },
+      message: (props) => `Ссылка ${props.value} введена не верна.`,
     },
   },
   owner: {
