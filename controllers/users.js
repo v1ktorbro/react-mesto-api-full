@@ -13,7 +13,7 @@ module.exports.registerUser = (req, res, next) => {
       User.create({
         email,
         password: hash,
-      }).then((user) => res.status(201).send(user)).catch(next);
+      }).then((user) => res.status(201).send(user.email)).catch(next);
     });
   }).catch(next);
 };
